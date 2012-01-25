@@ -1,7 +1,7 @@
-.eunit
-.#*
-ebin
 deps
-.eunit
-support/build_tmp
-/doc
+.DS_Store
+*.beam
+*.swp
+*.dump
+*.log
+ebin
