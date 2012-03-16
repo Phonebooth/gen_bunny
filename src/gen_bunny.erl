@@ -50,6 +50,7 @@
          get_channel/1,
          get_consumer_tag/1,
          ack/1,
+         nack/1,
          stop/1]).
 
 %% @private
@@ -136,6 +137,15 @@ ack({Channel, Tag}) ->
         true ->
             amqp_channel:call(Channel, #'basic.ack'{delivery_tag=Tag}),
             ok
+    end.
+
+nack({Channel, Tag}) -> 
+    case erlang:is_process_alive(Channel) of 
+        false ->  
+            {error, {no_channel, Channel}}; 
+        true -> 
+            amqp_channel:call(Channel, #'basic.nack'{delivery_tag=Tag}), 
+            ok 
     end.
 
 %% @private
